@@ -1,32 +1,65 @@
 #!/usr/bin/python3
 from spotify import Spotify
-from youtube import Youtube
+#from youtube import Youtube
 from editor import TagEditor
 from lastfm import LastFM
+<<<<<<< HEAD
 from apple import AppleMusic
 from deezer import Deezer
 import sys, getopt, shutil
 import os, re, random
 import notify2
 from pygame import mixer
+=======
+from deezer import Deezer
+import sys, getopt, shutil
+import os
+
+from core import s0
+from core import s1
+
+
+import logging
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)-2s - %(message)s')
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+>>>>>>> origin/telegram-alpha
 
 
 class MusicDownloader(object):
 
 
-    def __init__(self):
-        self.__youtube = Youtube()
+    def __init__(self, YT_API_KEY_N):
+        #self.__youtube = Youtube(YT_API_KEY_N)
         self.__spotify = Spotify()
         self.__editor = TagEditor()
         self.__last = LastFM()
+<<<<<<< HEAD
         self.__apple = AppleMusic()
         self.__deezer = Deezer()
+=======
+        self.__deezer = Deezer()
+
+        self.s0 = s0.Client()
+        self.s1 = s1.Client()
+
+    def getYTS(self):
+
+        return False #self.__youtube.getGoogleAPIStatus()
+
+    def FUCK_GOOGLE(self):
+
+        #self.__youtube.testYT_D()
+        pass
+>>>>>>> origin/telegram-alpha
 
     def __downloadMusicFromYoutube(self, name, uri, dur):
 
-        #finding song on youtube
-        self.__youtube.get(name, dur)
+        '''result = -1
+        url = None
 
+<<<<<<< HEAD
         notify.send(f'Downloading from YouTube', downloaded=False)
 
         #downloading video from youtube
@@ -41,7 +74,37 @@ class MusicDownloader(object):
             )
             return True
         else:
+=======
+        results = []
+
+        results.append(self.s1.search(name, dur))
+        results.append(self.s0.search(name, dur))
+
+        for res in results:
+
+            diff = dur - res['time']
+            diff = diff * -1 if diff < 0 else diff
+
+            if (result == -1 or diff < result):
+                    result, url = diff, res
+        
+        print(url)
+
+        if url['s'] == 1: self.s1.download(url, uri)
+        
+        else: self.s0.download(url, uri)'''
+
+        result = self.s0.search(name, dur)
+        self.s0.download(result, uri)
+        return True
+
+        try:
+            pass
+
+        except:
+>>>>>>> origin/telegram-alpha
             return False
+
 
     def __getSongInfoFromSpotify(self, uri):
 
@@ -61,6 +124,9 @@ class MusicDownloader(object):
 
     def getLastFMTags(self, name):
         return self.__last.get(name)
+
+    def getDeezerTags(self, id):
+        return self.__deezer.getSongInfo(id)
 
     def getYoutubeMusicInfo(self, url):
         return self.__youtube.getNameFromYoutube(url)
@@ -520,8 +586,69 @@ class MusicDownloader(object):
         else:
             return False, None
 
+    def downloadByDeezerID(self, uri):
+        #get info
+        info = self.__deezer.getSongInfo(uri)
+
+        if info:
+
+            fixed_name = f'{info["artist"][0]} - {info["name"]}'
+            fixed_name = fixed_name.replace('.','')
+            fixed_name = fixed_name.replace(',','')
+            fixed_name = fixed_name.replace("'",'')
+            fixed_name = fixed_name.replace("/","")
+
+            #finding and download from YouTube and tagging
+            if self.__downloadMusicFromYoutube(fixed_name, info['uri'], info['duration_ms']):
+
+                self.__editor.setTags(
+                    data=info
+                )
+
+                cachepath = os.getcwd() + '/cache'
+                fullpath = os.getcwd() + '/Downloads'
+
+                #logging
+                logging.info(f'CACHEPATH {cachepath}')
+                logging.info(f'FULLPATH {fullpath}')
+
+                if not os.path.exists(fullpath):
+                    os.makedirs(fullpath)
+
+                os.rename(
+                    f"{cachepath}/{info['uri']}/{info['uri']}.png",
+                    f"{fullpath}/{info['uri']}.png"
+                )
+                #logging
+                logging.info(f"MOVE TO Downloads/{info['uri']}.png")
+
+                os.rename(
+                    f"{cachepath}/{info['uri']}/{info['uri']}.mp3",
+                    f"{fullpath}/{info['uri']}.mp3"
+                )
+                #logging
+                logging.info(f"MOVE TO Downloads/{info['uri']}.mp3")
+
+                #deleting cache
+                try:
+                    shutil.rmtree(f"cache/{info['uri']}")
+                    #logging
+                    logging.info(f"DELETED cache/{info['uri']}")
+                except:
+                    #logging
+                    logging.error(f"DELETING cache/{info['uri']}")
+
+                return True
+        return False
+
     def search(self, query):
         return self.__spotify.search(query=query)
+
+    def getAlbum(self, uri):
+        return self.__spotify.getAlbum(uri)
+
+    def getAlbumDeezer(self, id):
+        return self.__deezer.getAlbum(id)
 
 
 class CLI(object):

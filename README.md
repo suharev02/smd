@@ -3,6 +3,7 @@
 
 <img align="center" src="https://raw.githubusercontent.com/artyshko/smd/telegram/Data/9.png"> 
 
+<<<<<<< HEAD
 <p align="center">
   <b><h1>Desktop version GUI<h1></b>
 </p>
@@ -150,3 +151,10 @@ Example:
 <img align="center" src="https://github.com/artyshko/smd/raw/master/Data/prev/9.png"></br>
 
 <img align="center" src="https://github.com/artyshko/smd/raw/master/Data/prev/10.png"></br>
+=======
+<img align="center" src="https://raw.githubusercontent.com/artyshko/smd/telegram-beta/Data/header1.png">
+<img align="center" src="https://raw.githubusercontent.com/artyshko/smd/telegram-beta/Data/header2.png">
+<img align="center" src="https://raw.githubusercontent.com/artyshko/smd/telegram-beta/Data/header3.png">
+<img align="center" src="https://raw.githubusercontent.com/artyshko/smd/telegram-beta/Data/header5.png">
+<img align="center" src="https://raw.githubusercontent.com/artyshko/smd/telegram-beta/Data/header4.png">
+>>>>>>> origin/telegram-alpha

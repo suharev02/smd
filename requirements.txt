@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 notify2==0.3.1
 spotipy==2.4.4
 lyricsgenius==1.4.0
@@ -13,3 +14,22 @@ Flask==0.12.2
 pytube==9.5.1
 PyQt5==5.13.0
 beautifulsoup4==4.8.0
+=======
+lxml==4.2.3
+mutagen==1.41.0
+spotipy==2.4.4
+youtube_dl==2019.8.13
+Flask==1.0.0
+pyperclip==1.6.4
+celery==4.2.1
+requests==2.18.4
+moviepy==0.2.3.5
+pytube==9.5.1
+imageio==2.3.0
+Pillow==6.0.0
+beautifulsoup4==4.7.1
+redis==3.2.0
+lyricsgenius==1.4.0
+proxybroker==0.3.2
+heroku3==3.4.0
+>>>>>>> origin/telegram-alpha

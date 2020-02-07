@@ -54,10 +54,17 @@ class Spotify(object):
             self.__url = 'https://accounts.spotify.com/api/token'
 
             self.__getRefreshToken()
+<<<<<<< HEAD
 
             self.__client = spotipy.Spotify(auth=self.__access_token)
 
 
+=======
+
+            self.__client = spotipy.Spotify(auth=self.__access_token)
+
+
+>>>>>>> origin/telegram-alpha
         def __getAccessToken(self):
             #start server
             #handling the code
@@ -80,6 +87,7 @@ class Spotify(object):
                     self.__client_secret
                 )
             ).json()
+<<<<<<< HEAD
 
             self.__access_token = response['access_token']
             self.__refresh_token = response['refresh_token']
@@ -101,11 +109,38 @@ class Spotify(object):
                                 ).json()
             self.__access_token = response['access_token']
 
+=======
+
+            self.__access_token = response['access_token']
+            self.__refresh_token = response['refresh_token']
+
+            data = {'refresh_token' : self.__refresh_token}
+
+            with open('.spotify', 'wb') as f:
+                pickle.dump(data, f)
+
+
+        def __getAccessTokenByRefreshToken(self, refresh_token):
+            response = requests.post('https://accounts.spotify.com/api/token?',
+                                     {
+                                        'grant_type': 'refresh_token',
+                                        'refresh_token': str(refresh_token),
+                                        'client_id': self.__client_id,
+                                        'client_secret': self.__client_secret
+                                    }
+                                ).json()
+            self.__access_token = response['access_token']
+
+>>>>>>> origin/telegram-alpha
 
         def __getRefreshToken(self):
             try:
 
+<<<<<<< HEAD
                 with open('.spotify_refresh_token.secret', 'rb') as f:
+=======
+                with open('.spotify', 'rb') as f:
+>>>>>>> origin/telegram-alpha
                     data = pickle.load(f)
                 self.__getAccessTokenByRefreshToken(data['refresh_token'])
 
@@ -116,7 +151,11 @@ class Spotify(object):
         def __getData(self):
             try:
 
+<<<<<<< HEAD
                 with open('.spotify_data.secret', 'rb') as f:
+=======
+                with open('.spotify', 'rb') as f:
+>>>>>>> origin/telegram-alpha
                     data = pickle.load(f)
 
                 self.__client_id = data['client_id']
@@ -169,6 +208,10 @@ class Spotify(object):
         '''
        Init function
        Creating spotify object with access_token
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/telegram-alpha
        :return: None
        '''
 
@@ -183,13 +226,20 @@ class Spotify(object):
 
         #initialization of spotify client
         self.client = spotipy.Spotify(self.__access_token)
+<<<<<<< HEAD
         #sys.exit()
+=======
+>>>>>>> origin/telegram-alpha
 
 
     def __getData(self):
         try:
 
+<<<<<<< HEAD
             with open('.spotify_data.secret', 'rb') as f:
+=======
+            with open('.spotify', 'rb') as f:
+>>>>>>> origin/telegram-alpha
                 data = pickle.load(f)
 
             self.__client_id = data['client_id']
@@ -296,4 +346,8 @@ class Spotify(object):
 
 if __name__ == '__main__':
     s = Spotify()
+<<<<<<< HEAD
     s.getAlbum('0nW0w37lrQ87k7PLZvC4qJ')
+=======
+    print(s.getSongInfo('1MQTmpYOZ6fcMQc56Hdo7T'))
+>>>>>>> origin/telegram-alpha

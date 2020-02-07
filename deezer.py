@@ -65,6 +65,7 @@ class Deezer(object):
 
         except: return None
 
+<<<<<<< HEAD
     def getPlaylist(self, id):
 
         try:
@@ -97,6 +98,8 @@ class Deezer(object):
 
         except: return None
 
+=======
+>>>>>>> origin/telegram-alpha
 if __name__ == '__main__':
 
     deezer = Deezer()
